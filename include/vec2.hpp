@@ -8,8 +8,6 @@
 #ifndef VEC2_H 
 #define VEC2_H
 
-#include<iostream>
-
 #include "commons.hpp"
 #include "qualifier.hpp"
 
