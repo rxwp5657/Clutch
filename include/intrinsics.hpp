@@ -13,40 +13,46 @@
 #include <xmmintrin.h> 
 #include <cmath>
 
-namespace gear {
-    
-    namespace math
-    {
+namespace clutch {
         //Common instinsic operations
         
-        inline __m128 _mm_replicate_x_ps(const __m128 v)
-        {
-            __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(0,0,0,0)); //replicate x value accross a SSE register.
-            return result;
-        }
-        
-        inline __m128 _mm_replicate_y_ps(const __m128 v)
-        {
-            __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(1,1,1,1)); //replicate y value accross a SSE register.
-            return result;
-        }
-        
-        inline __m128 _mm_replicate_z_ps(const __m128 v)
-        {
-            __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(2,2,2,2)); //replicate z value accross a SSE register.
-            return result;
-        }
-        
-        inline __m128 _mm_replicate_w_ps(const __m128 v)
-        {
-            __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(3,3,3,3)); //replicate w value accross a SSE register.
-            return result;
-        }
-        
-        inline __m128 _mm_madd_ps(const __m128 a, const __m128 b, const __m128 c)
-        { //multiply vectors a , b and add the result to c.
-            return _mm_add_ps(_mm_mul_ps(a,b),c);
-        }
+    inline __m128 _mm_replicate_x_ps(const __m128 v)
+    {
+        __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(0,0,0,0)); //replicate x value accross a SSE register.
+        return result;
+    }
+    
+    inline __m128 _mm_replicate_y_ps(const __m128 v)
+    {
+        __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(1,1,1,1)); //replicate y value accross a SSE register.
+        return result;
+    }
+    
+    inline __m128 _mm_replicate_z_ps(const __m128 v)
+    {
+        __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(2,2,2,2)); //replicate z value accross a SSE register.
+        return result;
+    }
+    
+    inline __m128 _mm_replicate_w_ps(const __m128 v)
+    {
+        __m128 result = _mm_shuffle_ps(v, v,_MM_SHUFFLE(3,3,3,3)); //replicate w value accross a SSE register.
+        return result;
+    }
+
+    inline __m128d _mm_replicate_x_pd(const __m128d v)
+    {
+        return _mm_shuffle_pd(v,v, _MM_SHUFFLE2(0,0)); //replicate x value accross a SSE register.
+    }
+
+    inline __m128d _mm_replicate_y_pd(const __m128d v)
+    {
+        return _mm_shuffle_pd(v,v, _MM_SHUFFLE2(1,1)); //replicate y value accross a SSE register.
+    }
+    
+    inline __m128 _mm_madd_ps(const __m128 a, const __m128 b, const __m128 c)
+    { //multiply vectors a , b and add the result to c.
+        return _mm_add_ps(_mm_mul_ps(a,b),c);
     }
 }
 

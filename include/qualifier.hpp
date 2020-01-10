@@ -35,13 +35,13 @@ namespace clutch
     template<>
     struct Container<4, unsigned int>
     {   
-        __m128i container;
+        typedef __m128i container;
     };
 
     template<>
     struct Container<2, double>
     {   
-        __m128d container;
+        typedef __m128d container;
     };
 }
 

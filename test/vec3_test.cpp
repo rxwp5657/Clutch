@@ -189,3 +189,9 @@ TEST(VectorTesting, CrossProduct){
     ASSERT_TRUE(Cross(v2,v1) == r2);
     ASSERT_TRUE(Cross(v3,v4) == r3);
 }
+
+TEST(VectorTesting, Vec3Normalize){
+    clutch::Vec3<float> v1{1.0f, 2.0f, 3.0f};
+
+    ASSERT_FLOAT_EQ(Mag(Normalize(v1)), 1.0);
+}

@@ -11,7 +11,6 @@
 
 #include <assert.h>
 #include <type_traits>
-#include "qualifier.hpp"
 #include "commons.hpp"
 
 namespace clutch
@@ -180,7 +179,6 @@ namespace clutch
 
             return *this;
         }
-        
     };
 
     template<typename T>
@@ -360,7 +358,7 @@ namespace clutch
     }
 
     template<typename T, typename U>
-    constexpr inline float Dot(Vec3<T>& a,Vec3<U>& b)
+    constexpr inline float Dot(const Vec3<T>& a,const Vec3<U>& b)
     {
         assert(std::is_arithmetic<T>::value && 
                std::is_arithmetic<U>::value);
@@ -371,7 +369,7 @@ namespace clutch
     }
 
     template<typename T>
-    constexpr inline float Mag(Vec3<T>& v)
+    constexpr inline float Mag(const Vec3<T>& v)
     {
         assert(std::is_arithmetic<T>::value);
 
@@ -379,7 +377,7 @@ namespace clutch
     }
     
     template<typename T, typename U>
-    constexpr inline auto Cross(Vec3<T>& a,Vec3<U>& b)
+    constexpr inline auto Cross(const Vec3<T>& a, const Vec3<U>& b)
     -> Vec3<decltype(a.x * b.x)>
     {
         assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
@@ -387,6 +385,13 @@ namespace clutch
         return Vec3<T>{a.y * b.z - a.z * b.y, 
                        a.z * b.x - a.x * b.z,
                        a.x * b.y - a.y * b.x};
+    }
+
+    template<typename T>
+    constexpr inline auto Normalize(const Vec3<T>& v)
+    -> Vec3<decltype(v.x * 1.0f)>
+    {
+        return Vec3<decltype(v.x * 1.0f)>{v / Mag(v)};
     }
 }
 
