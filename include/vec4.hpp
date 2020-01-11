@@ -190,6 +190,39 @@ namespace clutch
 
             return *this;
         }
+
+        #if defined(STORAGE_SSE)
+
+        Vec4<float> (const __m128 v)
+        :storage{v}
+        {
+        } 
+
+        Vec4<float>& operator+=(const Vec4<float>& v)
+        {
+            storage = _mm_add_ps(storage, v.storage);
+            return *this;
+        }
+
+        Vec4<float>& operator-=(const Vec4<float>& v)
+        {
+            storage = _mm_sub_ps(storage, v.storage);
+            return *this;
+        }
+
+        Vec4<float>& operator*=(const Vec4<float>& v)
+        {
+            storage = _mm_mul_ps(storage, v.storage);
+            return *this;
+        }
+
+        Vec4<float>& operator/=(const Vec4<float>& v)
+        {
+            storage = _mm_div_ps(storage, v.storage);
+            return *this;
+        }
+
+        #endif
     };
 
     template<typename T>
@@ -408,6 +441,83 @@ namespace clutch
 
         return Vec4<T>{v / Mag(v)};
     }
+
+    #if defined(STORAGE_SSE)
+
+    inline bool operator == (const Vec4<float>& a, 
+                             const Vec4<float>& b)
+    {
+        __m128 r = _mm_cmpeq_ps(a.storage, b.storage);
+
+        u_int16_t res = _mm_movemask_ps(r);
+
+        return res == 0xf;
+    }
+
+    inline auto operator + (const Vec4<float>& a, const Vec4<float>& b)
+    {
+        return Vec4<float>{_mm_add_ps(a.storage, b.storage)};
+    }
+
+    inline auto operator - (const Vec4<float>& a, const Vec4<float>& b)
+    {
+        return  Vec4<float> {_mm_sub_ps(a.storage, b.storage)};
+    }
+
+    inline auto operator * (const  Vec4<float>& v, const float s)
+    {
+        return  Vec4<float>{_mm_mul_ps(v.storage, _mm_load_ps1(&s))};
+    }
+
+    inline auto operator / (const Vec4<float>& v, const float s)
+    {
+        return Vec4<float>{_mm_div_ps(v.storage, _mm_load_ps1(&s))};
+    }
+
+    inline auto Neg(const Vec4<float>& v)
+    {
+        float neg = -1.0;
+        return Vec4<float>{_mm_mul_ps(v.storage, _mm_load_ps1(&neg))};
+    }
+
+    inline float Dot(const Vec4<float>& a, const Vec4<float>& b)
+    {
+        __m128 temp = _mm_mul_ps(a.storage,b.storage);
+        __m128 x = _mm_replicate_x_ps(temp);
+        __m128 y = _mm_replicate_y_ps(temp);
+        __m128 z = _mm_replicate_z_ps(temp);
+        __m128 w = _mm_replicate_w_ps(temp);
+        
+        temp = _mm_add_ps(x,y);
+        temp = _mm_add_ps(temp,z);
+        temp = _mm_add_ps(temp,w);
+        
+        float result __attribute__((aligned(16)));
+        
+        _mm_store_ss(&result,temp);
+        
+        return result;
+    }
+
+    inline auto Cross(const Vec4<float>& a, const Vec4<float>& b)
+    {
+        __m128 a_yzx = _mm_shuffle_ps(a.storage, a.storage, _MM_SHUFFLE(3, 0, 2, 1));
+        __m128 b_yzx = _mm_shuffle_ps(b.storage, b.storage, _MM_SHUFFLE(3, 0, 2, 1));
+        __m128 c = _mm_sub_ps(_mm_mul_ps(a.storage, b_yzx), _mm_mul_ps(a_yzx, b.storage));
+        return Vec4<float>{_mm_shuffle_ps(c, c, _MM_SHUFFLE(3, 0, 2, 1))};
+    }
+
+    inline auto Mag(const Vec4<float>& v)
+    {
+        return sqrt(Dot(v,v));
+    }
+
+    inline auto Normalize(const Vec4<float>& v)
+    {
+        return Vec4<float>{_mm_div_ps(v.storage, _mm_set1_ps(Mag(v)))};
+    }
+    
+    #endif
 }
 
 #endif
