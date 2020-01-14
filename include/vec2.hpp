@@ -51,6 +51,8 @@ namespace clutch
         {
             x = v.x;
             y = v.y;
+            
+            return *this;
         }
 
         /*

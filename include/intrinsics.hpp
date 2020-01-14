@@ -54,6 +54,11 @@ namespace clutch {
     { //multiply vectors a , b and add the result to c.
         return _mm_add_ps(_mm_mul_ps(a,b),c);
     }
+
+    inline __m128d _mm_madd_pd(const __m128d a, const __m128d b, const __m128d c)
+    { //multiply vectors a , b and add the result to c.
+        return _mm_add_pd(_mm_mul_pd(a,b),c);
+    }
 }
 
 #endif /* INTRINSICS_H */

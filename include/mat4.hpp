@@ -32,10 +32,10 @@ namespace clutch
              const T x1, const T y1, const T z1, const T w1, 
              const T x2, const T y2, const T z2, const T w2, 
              const T x3, const T y3, const T z3, const T w3)
-        :columns{Vec4<T>{x0,y0,z0,w0}, 
-                 Vec4<T>{x1,y1,z1,w1}, 
-                 Vec4<T>{x2,y2,z2,w2},
-                 Vec4<T>{x3,y3,z3,w3}}
+        :columns{Vec4<T>{x0,x1,x2,x3}, 
+                 Vec4<T>{y0,y1,y2,y3}, 
+                 Vec4<T>{z0,z1,z2,z3},
+                 Vec4<T>{w0,w1,w2,w3}}
         {
         }
         
@@ -49,34 +49,47 @@ namespace clutch
         
         Mat4<T>& operator=(const Mat4<T>& m)
         {
-            columns[0] = m.r0;
-            columns[1] = m.r1;
-            columns[2] = m.r2;
-            columns[3] = m.r3;
+            columns[0] = m.columns[0];
+            columns[1] = m.columns[1];
+            columns[2] = m.columns[2];
+            columns[3] = m.columns[3];
+
+            return *this;
         }
         
         Mat4<T>& operator+=(const Mat4<T>& m)
         {
-            columns[0] += m.r0;
-            columns[1] += m.r1;
-            columns[2] += m.r2;
-            columns[3] += m.r3;
+            columns[0] += m.columns[0];
+            columns[1] += m.columns[1];
+            columns[2] += m.columns[2];
+            columns[3] += m.columns[3];
+
+            return *this;
         }
 
         Mat4<T>& operator-=(const Mat4<T>& m)
         {
-            columns[0] -= m.r0;
-            columns[1] -= m.r1;
-            columns[2] -= m.r2;
-            columns[3] -= m.r3;
+            columns[0] -= m.columns[0];
+            columns[1] -= m.columns[1];
+            columns[2] -= m.columns[2];
+            columns[3] -= m.columns[3];
+
+            return *this;
         }
 
         Mat4<T>& operator*=(const Mat4<T>& m)
         {
-            columns[0] = columns[0] * m.r0.x + columns[1] * m.r0.y + columns[2] * m.r0.z + columns[3] *  m.r0.w;
-            columns[1] = columns[0] * m.r1.x + columns[1] * m.r1.y + columns[2] * m.r1.z + columns[3] *  m.r1.w;
-            columns[2] = columns[0] * m.r2.x + columns[1] * m.r2.y + columns[2] * m.r2.z + columns[3] *  m.r2.w;
-            columns[3] = columns[0] * m.r3.x + columns[1] * m.r3.y + columns[2] * m.r3.z + columns[3] *  m.r3.w;
+            auto a = (*this) * m.columns[0];
+            auto b = (*this) * m.columns[1];
+            auto c = (*this) * m.columns[2];
+            auto d = (*this) * m.columns[3];
+            
+            columns[0] = a;
+            columns[1] = b;
+            columns[2] = c;
+            columns[3] = d;
+
+            return *this;
         }
 
         Vec4<T> operator[](const unsigned int i)
@@ -88,23 +101,22 @@ namespace clutch
         T get(const unsigned int i, const unsigned int j) const
         {
             assert(i < 4 && j < 4);
-            switch (j)
+            switch (i)
             {
             case 0:
-                return columns[i].x;
+                return columns[j].x;
                 break;
             case 1:
-                return columns[i].y;
+                return columns[j].y;
                 break;
             case 2:
-                return columns[i].z;
+                return columns[j].z;
                 break;
             default:
-                return columns[i].w;
+                return columns[j].w;
                 break;
             }
         }
-
     };
 
     template<typename T>
@@ -118,6 +130,32 @@ namespace clutch
                a.columns[3] == b.columns[3];
     }
 
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator + (const Mat4<T>& a, const U scalar)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] + casted_scalar,
+                       a.columns[1] + casted_scalar,
+                       a.columns[2] + casted_scalar,
+                       a.columns[3] + casted_scalar};
+    }
+
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator + (const U scalar, const Mat4<T>& a)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] + casted_scalar,
+                       a.columns[1] + casted_scalar,
+                       a.columns[2] + casted_scalar,
+                       a.columns[3] + casted_scalar};
+    }
+
     template <typename T>
     constexpr inline Mat4<T> operator+(const Mat4<T>& a, const Mat4<T>& b)
     {
@@ -125,6 +163,32 @@ namespace clutch
                        a.columns[1] + b.columns[1], 
                        a.columns[2] + b.columns[2],
                        a.columns[3] + b.columns[3]};
+    }
+
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator - (const Mat4<T>& a, const U scalar)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] - casted_scalar,
+                       a.columns[1] - casted_scalar,
+                       a.columns[2] - casted_scalar,
+                       a.columns[3] - casted_scalar};
+    }
+
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator - (const U scalar, const Mat4<T>& a)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] - casted_scalar,
+                       a.columns[1] - casted_scalar,
+                       a.columns[2] - casted_scalar,
+                       a.columns[3] - casted_scalar};
     }
     
     template <typename T>
@@ -149,6 +213,58 @@ namespace clutch
     {
         return Mat4<decltype(a.columns[0].x * b.columns[0].x)>
         {a * b.columns[0], a * b.columns[1], a * b.columns[2], a * b.columns[3]};
+    }
+
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator * (const Mat4<T>& a, const U scalar)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] * casted_scalar,
+                       a.columns[1] * casted_scalar,
+                       a.columns[2] * casted_scalar,
+                       a.columns[3] * casted_scalar};
+    }
+
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator * (const U scalar, const Mat4<T>& a)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] * casted_scalar,
+                       a.columns[1] * casted_scalar,
+                       a.columns[2] * casted_scalar,
+                       a.columns[3] * casted_scalar};
+    }
+
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator / (const Mat4<T>& a, const U scalar)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] / casted_scalar,
+                       a.columns[1] / casted_scalar,
+                       a.columns[2] / casted_scalar,
+                       a.columns[3] / casted_scalar};
+    }
+
+    template<typename T, typename U>
+    constexpr inline Mat4<T> operator / (const U scalar, const Mat4<T>& a)
+    {
+        assert(std::is_arithmetic<T>::value && std::is_arithmetic<U>::value);
+
+        auto casted_scalar = static_cast<T>(scalar);
+
+        return Mat4<T>{a.columns[0] / casted_scalar,
+                       a.columns[1] / casted_scalar,
+                       a.columns[2] / casted_scalar,
+                       a.columns[3] / casted_scalar};
     }
 
     #if defined(STORAGE_SSE)
@@ -213,9 +329,9 @@ namespace clutch
         const Vec4<T> c = m.columns[2];
         const Vec4<T> d = m.columns[3];
         
-        const float x = m.get(0,3);
-        const float y = m.get(1,3);
-        const float z = m.get(2,3);
+        const float x = m.get(3,0);
+        const float y = m.get(3,1);
+        const float z = m.get(3,2);
         const float w = m.get(3,3);
 
         Vec4<T> s = Cross(a,b);
@@ -234,9 +350,9 @@ namespace clutch
         const Vec4<T> c = m.columns[2];
         const Vec4<T> d = m.columns[3];
         
-        const float x = m.get(0,3);
-        const float y = m.get(1,3);
-        const float z = m.get(2,3);
+        const float x = m.get(3,0);
+        const float y = m.get(3,1);
+        const float z = m.get(3,2);
         const float w = m.get(3,3);
 
         Vec4<T> s = Cross(a,b);
@@ -261,12 +377,11 @@ namespace clutch
         rv2.w = -Dot(d,s);
         rv3.w =  Dot(c,s);
         
-        return Mat4<T>{rv0.x, rv1.x, rv2.x, rv3.x, 
-                       rv0.y, rv1.y, rv2.y, rv3.y, 
-                       rv0.z, rv1.z, rv2.z, rv3.z, 
-                       rv0.w, rv1.w, rv2.w, rv3.w};
+        return Mat4<T>{rv0.x, rv0.y, rv0.z, rv0.w, 
+                       rv1.x, rv1.y, rv1.z, rv1.w, 
+                       rv2.x, rv2.y, rv2.z, rv2.w, 
+                       rv3.x, rv3.y, rv3.z, rv3.w};
     }
-
 }
 
 #endif

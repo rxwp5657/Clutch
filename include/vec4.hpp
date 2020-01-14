@@ -61,6 +61,8 @@ namespace clutch
             y = v.y;
             z = v.z;
             w = v.w;
+
+            return *this;
         }
 
         template<typename U>
