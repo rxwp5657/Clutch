@@ -12,14 +12,11 @@ namespace clutch
                        const Vec4<T>& target, 
                        const Vec4<T>& up)
     {
-        auto forward = Normalize(position - target);
-        auto left    = Normalize(Cross(up,forward));
-        auto true_up = Cross(forward,left);
+        auto forward = Normalize(target - position);
+        auto left    = Normalize(Cross(forward,up));
+        auto true_up = Cross(left,forward);
 
-        Mat4<float> rotation{left.x, left.y, left.z, 0.0f,
-                             true_up.x, true_up.y, true_up.z, 0.0f,
-                             forward.x, forward.y, forward.z, 0.0f,
-                             0.0f, 0.0f, 0.0f, 1.0f};
+        Mat4<float> rotation{left,true_up,-forward,Vec4{0.0f,0.0f,0.0f,1.0f}};
         
         auto translation = Translation(-position.x, -position.y, -position.z);
 
