@@ -21,7 +21,7 @@ namespace clutch
     };
 
     template<>
-    struct Container<4, float>
+    struct alignas(16) Container<4, float>
     {   
         typedef __m128 container;
     };
@@ -39,7 +39,7 @@ namespace clutch
     };
 
     template<>
-    struct Container<2, double>
+    struct alignas(16) Container<2, double>
     {   
         typedef __m128d container;
     };

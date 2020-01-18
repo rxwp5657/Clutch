@@ -16,7 +16,7 @@ namespace clutch
         auto left    = Normalize(Cross(forward,up));
         auto true_up = Cross(left,forward);
 
-        Mat4<float> rotation{left,true_up,-forward,Vec4{0.0f,0.0f,0.0f,1.0f}};
+        Mat4<float> rotation{left,true_up,-forward,Vec4<float>{0.0f,0.0f,0.0f,1.0f}};
         
         auto translation = Translation(-position.x, -position.y, -position.z);
 

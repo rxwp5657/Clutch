@@ -5,9 +5,9 @@
 #include "../include/projections.hpp"
 TEST(LookAtTest, CanMakeLookAt)
 {
-    clutch::Vec4 from{1.0f, 3.0f, 2.0f,0.0f};
-    clutch::Vec4 to{4.0f,-2.0f, 8.0f,  0.0f};
-    clutch::Vec4 up{1.0f, 1.0f, 0.0f,  0.0f};
+    clutch::Vec4<float> from{1.0f, 3.0f, 2.0f,0.0f};
+    clutch::Vec4<float> to{4.0f,-2.0f, 8.0f,  0.0f};
+    clutch::Vec4<float> up{1.0f, 1.0f, 0.0f,  0.0f};
 
     clutch::Mat4<float> result{-0.50709254f, 0.50709254f, 0.67612338f, 0.0f,
                                 0.767716f,   0.6060915f,  0.12121832f, 0.0f,
