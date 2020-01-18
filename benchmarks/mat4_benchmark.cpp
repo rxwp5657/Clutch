@@ -12,7 +12,7 @@ static void BM_Mat4SSEAddition(benchmark::State& state) {
             res += matrix;
 }
 
-BENCHMARK(BM_Mat4SSEAddition)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Mat4SSEAddition)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);
 
 static void BM_Mat4SSESubstraction(benchmark::State& state) {
     clutch::Mat4<float> matrices[100000]{};
@@ -25,7 +25,7 @@ static void BM_Mat4SSESubstraction(benchmark::State& state) {
             res -= matrix;
 }
 
-BENCHMARK(BM_Mat4SSESubstraction)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Mat4SSESubstraction)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);;
 
 static void BM_Mat4SSEMultiplication(benchmark::State& state) {
     clutch::Mat4<float> matrices[100000]{};
@@ -38,7 +38,7 @@ static void BM_Mat4SSEMultiplication(benchmark::State& state) {
             res *= matrix;
 }
 
-BENCHMARK(BM_Mat4SSEMultiplication)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Mat4SSEMultiplication)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);
 
 static void BM_Mat4SSEMultiplicationStar(benchmark::State& state) {
     clutch::Mat4<float> matrices[100000]{};
@@ -51,7 +51,7 @@ static void BM_Mat4SSEMultiplicationStar(benchmark::State& state) {
             res += matrix * res;
 }
 
-BENCHMARK(BM_Mat4SSEMultiplicationStar)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Mat4SSEMultiplicationStar)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);;
 
 static void BM_Mat4SSETranspose(benchmark::State& state) {
     clutch::Mat4<float> matrices[100000]{};
@@ -64,7 +64,9 @@ static void BM_Mat4SSETranspose(benchmark::State& state) {
             res += clutch::Transpose(matrix);
 }
 
-BENCHMARK(BM_Mat4SSETranspose)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Mat4SSETranspose)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);
+
+#if defined(STORAGE_SSE)
 
 static void BM_Mat4Inverse(benchmark::State& state) {
     clutch::Mat4<float> matrices[100000]{};
@@ -77,4 +79,5 @@ static void BM_Mat4Inverse(benchmark::State& state) {
             res += clutch::Inverse(matrix);
 }
 
-BENCHMARK(BM_Mat4Inverse)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Mat4Inverse)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);
+#endif

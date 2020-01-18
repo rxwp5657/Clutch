@@ -9,7 +9,7 @@ static void BM_Vec4SSEAddition(benchmark::State& state) {
       res += vector;
 }
 
-BENCHMARK(BM_Vec4SSEAddition)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Vec4SSEAddition)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);;
 
 static void BM_Vec4SSESubstraction(benchmark::State& state) {
   clutch::Vec4<float> vectors[100000]{};
@@ -19,7 +19,7 @@ static void BM_Vec4SSESubstraction(benchmark::State& state) {
       res -= vector;
 }
 
-BENCHMARK(BM_Vec4SSESubstraction)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Vec4SSESubstraction)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);;
 
 static void BM_Vec4SSEMultiplication(benchmark::State& state) {
   clutch::Vec4<float> vectors[100000]{};
@@ -29,7 +29,7 @@ static void BM_Vec4SSEMultiplication(benchmark::State& state) {
       res *= vector;
 }
 
-BENCHMARK(BM_Vec4SSEMultiplication)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Vec4SSEMultiplication)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);
 
 static void BM_Vec4SSEDot(benchmark::State& state) {
   clutch::Vec4<float> vectors[100000]{};
@@ -40,7 +40,7 @@ static void BM_Vec4SSEDot(benchmark::State& state) {
       value += clutch::Dot(res,vector);
 }
 
-BENCHMARK(BM_Vec4SSEDot)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Vec4SSEDot)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);;
 
 #if defined(STORAGE_SSE)
 
@@ -52,7 +52,7 @@ static void BM_Vec4SSECross(benchmark::State& state) {
      res += clutch::Cross(res,vector);
 }
 
-BENCHMARK(BM_Vec4SSECross)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Vec4SSECross)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);
 #endif
 
 static void BM_Vec4SSEMag(benchmark::State& state) {
@@ -64,4 +64,4 @@ static void BM_Vec4SSEMag(benchmark::State& state) {
       value += clutch::Mag(vector);
 }
 
-BENCHMARK(BM_Vec4SSEMag)->Unit(benchmark::kMicrosecond);
+BENCHMARK(BM_Vec4SSEMag)->Unit(benchmark::kNanosecond)->Repetitions(100)->ReportAggregatesOnly(true);
