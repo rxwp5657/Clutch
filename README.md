@@ -14,11 +14,11 @@ SIMD development is hard and knowing everything needed to make it work at is bes
 ## Installation
 ### Requirements
 + C++ 14 compiler.
-+ pmmintrin, xmmintrin headers installed (should be included with computer if your system supports SIMD).
++ pmmintrin, xmmintrin headers installed (should be included with your computer if your system supports SIMD).
 ### CMake
 In your CMakeLists.txt add:
 
-```c++
+```python
     ...
     add_subdirectory(*path_to_clutch*/clutch)
     include_directories(*path_to_clutch*/clutch/include)
