@@ -17,7 +17,7 @@ namespace clutch
     template<typename T>
     struct Vec2
     {
-        union alignas(16)
+        union
         {
             struct{T x, y;};
             typename Container<2,T>::container storage;
