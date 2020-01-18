@@ -8,7 +8,7 @@ set(CMAKE_BUILD_TYPE Release)
 #Bring the headers
 include_directories(include)
 
-file(GLOB SOURCES "./*.cpp")
+file(GLOB SOURCES ./*.cpp)
 
 add_library(clutch STATIC ${SOURCES})
 
