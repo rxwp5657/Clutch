@@ -18,14 +18,14 @@ SIMD development is hard and knowing everything needed to make it work at is bes
 ### CMake
 In your CMakeLists.txt add:
 
-```python
+```c++
     ...
-    add_subdirectory(*path_to_clutch*/clutch)
-    include_directories(*path_to_clutch*/clutch/include)
-    target_link_libraries(*project_name* clutch)
+    add_subdirectory(path_to_clutch/clutch)
+    include_directories(path_to_clutch/clutch/include)
+    target_link_libraries(project_name clutch)
 ```
 ## Project Structure
-Clutch is a header only project, this is, there are no .cpp files since it is based on templates and inlining although, .inl and #include directives could be used, all code refering each data type is defiened on its own header so, no dependency jumping is required and learning is easier.
+Clutch is a header only project, this is, there are no .cpp files since it is based on templates and inlining, although .inl and #include directives could be used, all code refering each data type is defiened on its own header so, no dependency jumping is required thus, making it easier to understand.
 
 ```
 ├── CMakeLists.txt
@@ -63,3 +63,117 @@ Clutch is a header only project, this is, there are no .cpp files since it is ba
     ├── vec3_test.cpp
     └── vec4_test.cpp
 ```
+## Usage
+Just import the data structures you want to use. For example, if you want to use a Vec4 and a rotation throuh the Z axis you do:
+```c++
+... //other includes
+#include <vec4.hpp>
+#include <transforms.hpp>
+#include <commons.hpp>
+
+int main(int argc, char *argv[])
+{
+    clutch::Vec4<float> a{1.0f, 2.0f, 3.0f, 1.0};
+    auto transformed_v = clutch::RotateZ(clutch::PI / 4) * a;
+    ...
+}
+```
+
+### OpenGl
+Clutch can interoperate with OpenGl, here is a simple example:
+
+```c++
+... //other includes 
+#define  GLEW_STATIC
+#include <vec2.hpp>
+#include <transforms.hpp>
+#include <commons.hpp>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+int main(int argc, char *argv[])
+{
+    ... // context and window creation and, shader compilation and linkage...
+
+
+    // Define the vertices of a triangle
+
+    const clutch::Vec2<float> vertices[]{
+          clutch::Vec2<float>{0.0f,  0.5f},
+          clutch::Vec2<float>{0.5f, -0.5f},
+          clutch::Vec2<float>{-0.5f, -0.5f}  
+    };
+
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    // Load triangle vertex data to GPU
+
+    GLuint vertexbuffer;
+	glGenBuffers(1, &vertexbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(clutch::Vec2<float>), &vertices[0], GL_STATIC_DRAW);
+
+    GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+    glEnableVertexAttribArray(posAttrib);
+    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+    ... 
+    // render loop, input handling and window management
+}
+```
+Result: 
+
+With transform:
+```c++
+... // includes from example
+
+int main(int argc, char *argv[])
+{
+    ... // previous snippet
+
+    GLint model    = glGetUniformLocation(shaderProgram, "model");
+    auto transform = clutch::RotateZ(clutch::PI / 4);
+    glUniformMatrix4fv(model, 1, GL_FALSE, clutch::ValuePtr(transform))
+
+    ... 
+    // render loop, input handling and window management
+}
+
+```
+Result:
+
+Look-at matrix and perspective projection for camera simulation:
+
+```c++
+... // includes from example
+#include <projections.hpp>
+#include <lookat.hpp>
+
+int main(int argc, char *argv[])
+{
+    ... // previous snippet
+
+    clutch::Vec4<float> posititon{0.0f, 0.0f, 5.0f, 1.0};
+    clutch::Vec4<float> target{0.0f, 0.0f, 0.0f, 1.0};
+    clutch::Vec4<float> up{0.0f, 1.0f, 0.0f};
+
+    auto view = clutch::LookAt(from,to,up);
+    auto proj = clutch::Perspective((45.0f * clutch::PI) / 180, 800.0f / 600.0f, 1.0f, 100.0f);
+
+    // load transforms to shader to make MVP;
+
+    GLint view_gl  = glGetUniformLocation(shaderProgram, "V");
+    glUniformMatrix4fv(model, 1, GL_FALSE, clutch::ValuePtr(view))
+
+    GLint proj_gl  = glGetUniformLocation(shaderProgram, "P");
+    glUniformMatrix4fv(model, 1, GL_FALSE, clutch::ValuePtr(proj))
+
+    ... 
+    // render loop, input handling and window management
+}
+
+```
+Result: 
+
