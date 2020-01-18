@@ -1,15 +1,27 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required(VERSION 3.12)
 
 # Project Name
-project (clutch)
+project("clutch" VERSION 1.0.1
+            HOMEPAGE_URL "https://github.com/rxwp5657/Clutch.git")
 
 set(CMAKE_BUILD_TYPE Release)
 
-#Bring the headers
-include_directories(include)
+add_library(${PROJECT_NAME} INTERFACE)
 
-file(GLOB SOURCES ./*.cpp)
+target_sources(${PROJECT_NAME} INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/commons.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/lookat.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/mat2.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/mat3.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/mat4.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/projections.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/transforms.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vec2.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vec3.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vec4.hpp
+    )
 
-add_library(clutch STATIC ${SOURCES})
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_14)
 
-install(TARGETS clutch DESTINATION /usr/lib)
+target_include_directories(${PROJECT_NAME} INTERFACE include/)
+target_link_libraries(${PROJECT_NAME})
