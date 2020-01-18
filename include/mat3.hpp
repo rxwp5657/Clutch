@@ -312,6 +312,12 @@ namespace clutch
 
         return (1.0f / determinant) * cofactor;
     }
+
+    template <typename T>
+    inline auto ValuePtr(const Mat3<T>& m)
+    {
+        return &m.columns[0].x;
+    }
 }
 
 #endif

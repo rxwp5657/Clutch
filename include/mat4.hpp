@@ -382,6 +382,12 @@ namespace clutch
                        rv2.x, rv2.y, rv2.z, rv2.w, 
                        rv3.x, rv3.y, rv3.z, rv3.w};
     }
+
+    template <typename T>
+    inline auto ValuePtr(const Mat4<T>& m)
+    {
+        return &m.columns[0].x;
+    }
 }
 
 #endif

@@ -272,6 +272,12 @@ namespace clutch
         return Mat2<T>{m.columns[1].y * inv_d,-m.columns[1].x * inv_d, 
                       -m.columns[0].y * inv_d, m.columns[0].x * inv_d};
     }
+
+    template <typename T>
+    inline auto ValuePtr(const Mat2<T>& m)
+    {
+        return &m.columns[0].x;
+    }
 }
 
 #endif
