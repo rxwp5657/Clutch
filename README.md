@@ -79,8 +79,8 @@ int main(int argc, char *argv[])
 }
 ```
 
-### OpenGl
-Clutch can interoperate with OpenGl, here is a simple example:
+### OpenGL
+Clutch can interoperate with OpenGL, here is a simple example:
 
 ```c++
 ... //other includes 
