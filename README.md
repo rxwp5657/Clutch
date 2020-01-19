@@ -125,6 +125,8 @@ int main(int argc, char *argv[])
 ```
 Result: 
 
+![Triangle](/docs/triangle.png)
+
 With transform:
 ```c++
 ... // includes from example
@@ -143,6 +145,8 @@ int main(int argc, char *argv[])
 
 ```
 Result:
+
+![Transforms](/docs/transform.png)
 
 Look-at matrix and perspective projection for camera simulation:
 
