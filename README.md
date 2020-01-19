@@ -185,20 +185,20 @@ Result:
 
 ## Benchmarks
 Now, SIMD is about performance so, some benchmarks were run with the following specifications:
-+ Google Benchmark library.
-+ CPU: 1.4 GHz Intel Core i5 8th gen.
-+ RAM: 8bg 2133MHz.
-+ Compiler: AppleClang.
-+ Compiler Version: 10.0.1.10010046.
-+ 100,000 vectors and matrices were used for the operations.
-+ 100 iterations.
-+ SIMD enabled and disabled.
++ **library**: Google Benchmark.
++ **CPU**: 1.4 GHz Intel Core i5 8th gen.
++ **RAM**: 8gb 2133MHz.
++ **Compiler**: AppleClang.
++ **Compiler Version**: 10.0.1.10010046.
++ **Number of operands**: 100,000 vectors and matrices were used for the operations.
++ **Iterations**: iterations.
++ **SIMD enabled and disabled**.
 
 ### Benchmark Results SIMD Disabled
 
 | Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
 | :------------- | :-------: | :---------: | :------: | :--------: |
-| Mat4 Addition  | 1085 ns    | 1084 ns      | 1083ns   | 1082ns     |
+| Mat4 Addition  | 1085 ns    | 1084 ns      | 1083 ns   | 1082 ns     |
 | Mat4 Substraction   | 1075 ns    | 1073 ns      | 1073 ns   | 1072 ns   |
 | Mat4 Multiplication | 755849 ns  | 753052 ns    | 754114 ns | 751472 ns |
 | Mat4 Member Multiplication | 963014 ns  | 956425 ns    | 959876 ns | 955453 ns |
@@ -211,6 +211,26 @@ Now, SIMD is about performance so, some benchmarks were run with the following s
 | Vec4 Multiplication | 1059 ns | 1055 ns  | 1058 ns  | 1055 ns    |
 | Vec4 Dot Product    | 1076 ns | 1072 ns  | 1074 ns  | 1071 ns    |
 | Vec4 Magnitude      | 1079 ns | 1080 ns  | 1078 ns  | 1078 ns    |
+
+### Benchmark Results SIMD Enabled
+
+| Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
+| :------------- | :-------: | :---------: | :------: | :--------: |
+| Mat4 Addition  | 1053 ns   | 1053 ns     | 1053 ns  | 1053 ns    |
+| Mat4 Substraction   | 1055 ns  | 1052 ns | 1055 ns  | 1052 ns    |
+| Mat4 Multiplication | 1067 ns  | 1057 ns | 1066 ns  | 1057 ns    |
+| Mat4 Member Multiplication  | 1062 ns    | 1053 ns  | 1061 ns | 1052 ns |
+| Mat4 Transpose | 1076 ns    | 1074 ns    | 1075 ns  | 1072 ns |
+| Mat4 Inverse   | 2563755 ns | 2557643 ns | 2559860 ns | 2555468 ns|
+
+| Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
+| :------------- | :-------: | :---------: | :------: | :--------: |
+| Vec4 Addition  | 1063 ns   | 1054 ns     | 1062 ns  | 1054 ns    |
+| Vec4 Substraction   | 1080 ns | 1076 ns  | 1078 ns  | 1075 ns    |
+| Vec4 Multiplication | 1074 ns | 1062 ns  | 1072 ns  | 1062 ns    |
+| Vec4 Dot Product    | 1073 ns | 1058 ns  | 1071 ns  | 1057 ns    |
+| Vec4 Cross Product  | 1076 ns | 1064 ns  | 1074 ns  | 1063 ns    |
+| Vec4 Magnitude      | 1068 ns | 1055 ns  | 1067 ns  | 1055 ns    |
 
 
 
