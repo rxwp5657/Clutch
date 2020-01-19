@@ -6,6 +6,8 @@ project("clutch" VERSION 1.0.1
 
 set(CMAKE_BUILD_TYPE Release)
 
+add_compile_definitions(STORAGE_SSE)
+
 add_library(${PROJECT_NAME} INTERFACE)
 
 target_sources(${PROJECT_NAME} INTERFACE

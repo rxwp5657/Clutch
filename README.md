@@ -182,3 +182,27 @@ int main(int argc, char *argv[])
 Result: 
 
 ![Transforms](/docs/monkey.gif)
+
+## Benchmarks
+Now, SIMD is about performance so, some benchmarks were run with the following specifications:
++ Google Benchmark library.
++ CPU: 1.4 GHz Intel Core i5 8th gen.
++ RAM: 8bg 2133MHz.
++ Compiler: AppleClang.
++ Compiler Version: 10.0.1.10010046.
++ 100,000 vectors and matrices were used for the operations.
++ 100 iterations.
++ SIMD enabled and disabled.
+
+### Benchmark Results SIMD Disabled
+
+| Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
+| :------------- | :-------: | :---------: | :------: | :--------: |
+| Mat4 Addition  | 1085ns    | 1084ns      | 1083ns   | 1082ns     |
+| Mat4 Substraction   | 1075ns    | 1073ns      | 1073ns   | 1072ns   |
+| Mat4 Multiplication | 755849ns  | 753052ns    | 754114ns | 751472ns |
+| Mat4 Member Multiplication | 963014ns  | 956425ns    | 959876ns | 955453ns |
+| Mat4 Transpose | 1083ns    | 1084ns    | 1081ns | 1082ns |
+
+
+
