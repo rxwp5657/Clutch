@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
     clutch::Vec4<float> target{0.0f, 0.0f, 0.0f, 1.0};
     clutch::Vec4<float> up{0.0f, 1.0f, 0.0f};
 
-    auto view = clutch::LookAt(from,to,up);
+    auto view = clutch::LookAt(posititon,target,up);
     auto proj = clutch::Perspective((45.0f * clutch::PI) / 180, 800.0f / 600.0f, 1.0f, 100.0f);
 
     // load transforms to shader to make MVP;
@@ -198,11 +198,19 @@ Now, SIMD is about performance so, some benchmarks were run with the following s
 
 | Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
 | :------------- | :-------: | :---------: | :------: | :--------: |
-| Mat4 Addition  | 1085ns    | 1084ns      | 1083ns   | 1082ns     |
-| Mat4 Substraction   | 1075ns    | 1073ns      | 1073ns   | 1072ns   |
-| Mat4 Multiplication | 755849ns  | 753052ns    | 754114ns | 751472ns |
-| Mat4 Member Multiplication | 963014ns  | 956425ns    | 959876ns | 955453ns |
-| Mat4 Transpose | 1083ns    | 1084ns    | 1081ns | 1082ns |
+| Mat4 Addition  | 1085 ns    | 1084 ns      | 1083ns   | 1082ns     |
+| Mat4 Substraction   | 1075 ns    | 1073 ns      | 1073 ns   | 1072 ns   |
+| Mat4 Multiplication | 755849 ns  | 753052 ns    | 754114 ns | 751472 ns |
+| Mat4 Member Multiplication | 963014 ns  | 956425 ns    | 959876 ns | 955453 ns |
+| Mat4 Transpose | 1083 ns    | 1084 ns    | 1081 ns | 1082 ns |
+
+| Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
+| :------------- | :-------: | :---------: | :------: | :--------: |
+| Vec4 Addition  | 1080 ns   | 1077 ns     | 1078 ns  | 1076 ns    |
+| Vec4 Substraction   | 1086 ns | 1083 ns  | 1083 ns  | 1081 ns    |
+| Vec4 Multiplication | 1059 ns | 1055 ns  | 1058 ns  | 1055 ns    |
+| Vec4 Dot Product    | 1076 ns | 1072 ns  | 1074 ns  | 1071 ns    |
+| Vec4 Magnitude      | 1079 ns | 1080 ns  | 1078 ns  | 1078 ns    |
 
 
 
