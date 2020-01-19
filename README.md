@@ -232,5 +232,9 @@ Now, SIMD is about performance so, some benchmarks were run with the following s
 | Vec4 Cross Product  | 1076 ns | 1064 ns  | 1074 ns  | 1063 ns    |
 | Vec4 Magnitude      | 1068 ns | 1055 ns  | 1067 ns  | 1055 ns    |
 
+### Benchmark Results Discussion
+
+## TODO
+
 
 
