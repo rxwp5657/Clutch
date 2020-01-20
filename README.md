@@ -238,9 +238,9 @@ As you can see, benchmarks results proved that SIMD operations overall improve f
 In conclusion, SIMD proved to have improvements against template implementation but not all cases were significant. Thus, benchmarks need to be revised as well as implemtation, maybe trick 1. (uniforms) are not helping or maybe alignment needs to be checked. Also, matrix inversion algorithm needs to be revised beacuase performance was at its worst. 
 
 ## TODO
-[ ] Union vs load and unload during SIMD function call. 
-[ ] Check alignment of data structrues (this may be holding off performance). 
-[ ] Implement promotion and operations between Vec(N - 1) to Vec(N) and Mat(N-1) to Mat(N). 
+[ ] Union vs load and unload during SIMD function call.  
+[ ] Check alignment of data structrues (this may be holding off performance).   
+[ ] Implement promotion and operations between Vec(N - 1) to Vec(N) and Mat(N-1) to Mat(N).  
 
 
 
