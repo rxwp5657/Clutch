@@ -28,6 +28,12 @@ namespace clutch
         {
         }
 
+        /* 
+            The library is column mayor thus, save 
+            the columns on each vector so it is 
+            easier to do the operations latter on.
+        */
+       
         Mat4(const T x0, const T y0, const T z0, const T w0,
              const T x1, const T y1, const T z1, const T w1, 
              const T x2, const T y2, const T z2, const T w2, 
@@ -128,7 +134,12 @@ namespace clutch
                a.columns[1] == b.columns[1] &&
                a.columns[2] == b.columns[2] &&
                a.columns[3] == b.columns[3];
-    }
+    } 
+
+    /*
+        Cast the scalar to the Matrix scalar so the matrix doesn`t loose 
+        its type.
+    */
 
     template<typename T, typename U>
     constexpr inline Mat4<T> operator + (const Mat4<T>& a, const U scalar)
@@ -199,7 +210,25 @@ namespace clutch
                        a.columns[2] - b.columns[2],
                        a.columns[3] - b.columns[3]};
     }
+    
+    /* 
 
+        Matrix - Vector mutiplication 4x4 * 4x1
+        Althought the operation is row * colum:
+
+       | a b c d |   | x |   | a * x + b * y + c * z + d * w |   
+       | e f g h | * | y | = | ... |
+       | i j k l |   | z |   | ... |
+       | m n o p |   | w |   | ... |
+
+       The operation can be improved if multiplications are done first:
+
+       | a b c d |   | x |      
+       | e f g h | * | y | = | a * x + e * x + i * x + m * x | + | b * y + f * y + g * y + n * y | + ...
+       | i j k l |   | z |   
+       | m n o p |   | w |   
+
+    */
     template <typename T, typename U>
     constexpr inline auto operator*(const Mat4<T>& m, const Vec4<U>& v)
     -> Vec4<decltype(m.columns[0].x * v.x)>
@@ -382,6 +411,8 @@ namespace clutch
                        rv2.x, rv2.y, rv2.z, rv2.w, 
                        rv3.x, rv3.y, rv3.z, rv3.w};
     }
+
+    // Return first element of the matrix so OpenGL can process it
 
     template <typename T>
     inline auto ValuePtr(const Mat4<T>& m)

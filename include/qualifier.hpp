@@ -13,6 +13,18 @@
 
 namespace clutch
 {
+    /*
+        In order to not delegate the responsibility of specifying 
+        the SSE or container type to the user when instantiating
+        (Vec2, Vec3 and Vec4), types are defined previously
+        and "defined" during instantiation based on struct length
+        and type (e.g Vec4<float>)
+    */
+
+    /*
+        When SIMD are not defined, the container shall be 
+        an array.
+    */
     template<size_t N, typename T> struct Container
     {
         typedef struct alignas(N * sizeof(T)) container {

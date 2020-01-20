@@ -12,6 +12,8 @@ namespace clutch
                        const Vec4<T>& target, 
                        const Vec4<T>& up)
     {
+        // Calculate the basis vectors 
+
         auto forward = Normalize(target - position);
         auto left    = Normalize(Cross(forward,up));
         auto true_up = Cross(left,forward);
@@ -19,7 +21,7 @@ namespace clutch
         Mat4<float> rotation{left,true_up,-forward,Vec4<float>{0.0f,0.0f,0.0f,1.0f}};
         
         auto translation = Translation(-position.x, -position.y, -position.z);
-
+        
         return rotation * translation;
     }
 }

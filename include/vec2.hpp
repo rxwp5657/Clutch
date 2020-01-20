@@ -13,7 +13,20 @@
 
 namespace clutch
 {
+    /*
+        SIMD Trick 1. 
+            By defining a SSE register 
+            inside a union type all variables
+            share the same address space thus,
+            no load_pd and set_pd is needed and,
+            member access is easier.
 
+        Warning of Trick 1.
+            If all member variables share the same
+            address, the struct should be aligned 
+            for efficient loading and unloading otherwise
+            there will be a performance impact
+    */
     template<typename T>
     struct Vec2
     {
