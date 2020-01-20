@@ -198,11 +198,11 @@ Now, SIMD is about performance so, some benchmarks were run with the following s
 
 | Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
 | :------------- | :-------: | :---------: | :------: | :--------: |
-| Mat4 Addition  | 1085 ns    | 1084 ns      | 1083 ns   | 1082 ns     |
+| Mat4 Addition  | 1085 ns   | 1084 ns     | 1083 ns  | 1082 ns    |
 | Mat4 Substraction   | 1075 ns    | 1073 ns      | 1073 ns   | 1072 ns   |
 | Mat4 Multiplication | 755849 ns  | 753052 ns    | 754114 ns | 751472 ns |
-| Mat4 Member Multiplication | 963014 ns  | 956425 ns    | 959876 ns | 955453 ns |
-| Mat4 Transpose | 1083 ns    | 1084 ns    | 1081 ns | 1082 ns |
+| Mat4 Member Multiplication  | 963014 ns  | 956425 ns | 959876 ns | 955453 ns |
+| Mat4 Transpose | 1083 ns    | 1084 ns    | 1081 ns   | 1082 ns |
 
 | Benchmark Name | Mean Time | Median Time | Mean CPU | Median CPU |
 | :------------- | :-------: | :---------: | :------: | :--------: |
@@ -233,8 +233,15 @@ Now, SIMD is about performance so, some benchmarks were run with the following s
 | Vec4 Magnitude      | 1068 ns | 1055 ns  | 1067 ns  | 1055 ns    |
 
 ### Benchmark Results Discussion
+As you can see, benchmarks results proved that SIMD operations overall improve from the normal template operations but, most of the improvements are not quite significant. For example: vector addition had an improvement of the 9.5% for mean time, 3.3% for meadian time, 1.5% for mean CPU and 2.1% for median CPU time. In this case, there may be a few reasons for this to be happening: data structures are not being alinged or, SIMD perform better when operations are done in batch like Matrix - Matrix multiplication. On the other hand and, as a result of great improvement, Matrix - Matrix multiplication showed an improvement of the 99.8% for mean time, 99.8% for the median time, 98.56% for mean CPU and 99.8% for median CPU time.
+
+In conclusion, SIMD proved to have improvements against template implementation but not all cases were significant. Thus, benchmarks need to be revised as well as implemtation, maybe trick 1. (uniforms) are not helping or maybe alignment needs to be checked. Also, matrix inversion algorithm needs to be revised beacuase performance was at its worst. 
 
 ## TODO
+[checkbox:unchecked] Union vs load and unload during SIMD function call.
+[checkbox:unchecked] Check alignment of data structrues (this may be holding off performance).
+[checkbox:unchecked] Implement promotion and operations between Vec(N - 1) to Vec(N) and Mat(N-1) to Mat(N).
+
 
 
 
