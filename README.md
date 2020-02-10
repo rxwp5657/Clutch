@@ -241,7 +241,7 @@ In conclusion, SIMD proved to have improvements against template implementation 
 [ ] Union vs load and unload during SIMD function call.  
 [ ] Check alignment of data structrues (this may be holding off performance).   
 [ ] Implement promotion and operations between Vec(N - 1) to Vec(N) and Mat(N-1) to Mat(N).  
-[ ] Check structure alignments.  
+[ ] Check structure alignments.
 
 
 
