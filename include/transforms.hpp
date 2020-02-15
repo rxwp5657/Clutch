@@ -62,7 +62,7 @@ namespace clutch
     template <typename T>
     bool IsUniformScale(const Mat4<T>& s)
     {
-        return s.get(0,0) == s.get(1,1) == s.get(2,2);
+        return s.get(0,0) == s.get(1,1) && s.get(1,1) == s.get(2,2);
     }
 }
 
