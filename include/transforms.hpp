@@ -51,13 +51,19 @@ namespace clutch
     }
 
     template <typename T>
-        auto Shearing(T x1, T x2, T y1, T y2, T z1, T z2)
-        {
-            return Mat4<T>{1, x1, x2, 0,
-                           y1, 1, y2, 0,
-                           z1, z2, 1, 0,
-                           0,  0,  0, 1};
-        }
+    auto Shearing(T x1, T x2, T y1, T y2, T z1, T z2)
+    {
+        return Mat4<T>{1, x1, x2, 0,
+                        y1, 1, y2, 0,
+                        z1, z2, 1, 0,
+                        0,  0,  0, 1};
+    }
+
+    template <typename T>
+    bool IsUniformScale(const Mat4<T>& s)
+    {
+        return s.get(0,0) == s.get(1,1) == s.get(2,2);
+    }
 }
 
 #endif
