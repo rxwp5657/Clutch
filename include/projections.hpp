@@ -5,7 +5,7 @@
 
 namespace clutch
 {
-    Mat4<float> Perspective(const float fov, 
+    inline Mat4<float> Perspective(const float fov, 
                             const float aspect_ratio,
                             const float near,
                             const float far)
@@ -18,7 +18,7 @@ namespace clutch
                             0.0f, 0.0f, -1.0f, 0};
     }
 
-    Mat4<float> Orthopraphic(const float top,
+    inline Mat4<float> Orthopraphic(const float top,
                              const float right,
                              const float bottom,
                              const float left,
