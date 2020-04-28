@@ -18,21 +18,18 @@ namespace clutch
                             0.0f, 0.0f, -1.0f, 0};
     }
 
-    inline Mat4<float> Orthopraphic(const float top,
-                             const float right,
-                             const float bottom,
-                             const float left,
-                             const float near,
-                             const float far)
+    inline Mat4<float> Orthopraphic(const float left,
+                                    const float right,
+                                    const float bottom,
+                                    const float top,
+                                    const float near,
+                                    const float far)
     {
-        auto w_inv = 1.0f / (right  - left);
-        auto h_inv = 1.0f / (bottom - top);
-        auto d_inv = 1.0f / (far - near);
-
-            return Mat4<float>  {2.0f * w_inv, 0.0,  0.0,  -(right  + left) * w_inv, 
-                                 0.0f, 2.0f * h_inv, 0.0f, -(bottom + top)  * h_inv,
-                                 0.0f, 0.0f, d_inv, -near * d_inv, 
-                                 0.0f, 0.0f, 0.0f, 1.0f}; 
+       
+        return Mat4<float>  {2.0f / (right - left), 0.0,    0.0,   - (right + left) / (right - left), 
+                            0.0f, (2.0f) / (top - bottom), 0.0f,  - (top + bottom) / (top - bottom),
+                            0.0f, 0.0f,  - (2.0f) / (far - near), - (far + near) / (far - near), 
+                            0.0f, 0.0f, 0.0f, 1.0f}; 
     }
 
 
